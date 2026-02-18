@@ -1,45 +1,45 @@
 # 📈 U.S. Federal Funds Rate Forecasting using Machine Learning
 
-This project implements a robust framework for time series forecasting of the **U.S. Federal Funds Rate (FEDFUNDS)**. Instead of relying on a single model, it trains, evaluates, and compares multiple econometric and Machine Learning models to find the optimal prediction tool based on comprehensive macroeconomic data.
+Este proyecto implementa un marco robusto de Machine Learning para el pronóstico de series temporales del **Tipo de Interés de la Reserva Federal (FEDFUNDS)**. El sistema entrena, evalúa y compara múltiples modelos econométricos y de ML para identificar la herramienta de predicción óptima basada en variables macroeconómicas de EE. UU.
 
-## 🎯 Project Goal
+## 🎯 Objetivo del Proyecto
+El objetivo principal es construir y comparar rigurosamente modelos predictivos —lineales, no lineales y de series temporales— para anticipar el valor de **FEDFUNDS** del mes siguiente. Se busca identificar el modelo con mayor capacidad de generalización mediante métricas de error (MSE, MAE) y bondad de ajuste ($R^2$).
 
-To build and rigorously benchmark several predictive models—including both linear and non-linear approaches—to accurately forecast the next month's FEDFUNDS rate. The objective is to identify the most performant model (measured by metrics like MSE, MAE, and R²) and use it to generate actionable, short-term rate predictions.
+## 📊 Datos y Variables
+El dataset utilizado contiene **795 observaciones mensuales** (desde 1959 hasta 2023). 
 
-## 📊 Data & Features
-
-The model is trained on historical macroeconomic data for the United States, with **FEDFUNDS** as the **Target Variable**.
-
-| Variable | Description | Role in Model |
+| Variable | Descripción | Rol |
 | :--- | :--- | :--- |
-| **FEDFUNDS** | Federal Funds Rate | **Target (y)** |
-| **GS10** | 10-Year Treasury Constant Maturity Rate | Feature (X) |
-| **CPIAUCSL** | Consumer Price Index (Inflation proxy) | Feature (X) |
-| **Unemployment rate** | Unemployment Rate (Labor Market proxy) | Feature (X) |
-| **POP** | U.S. Total Population | Feature (X) |
-| **NA000334Q** | Gross National Product (GNP) or similar indicator | Feature (X) |
-| **PCE** | Personal Consumption Expenditures | Feature (X) |
+| **FEDFUNDS** | Tipos de interés de la FED | **Target (y)** |
+| **GS10** | Bono del Tesoro a 10 años | Feature (X) |
+| **CPIAUCSL** | Índice de Precios al Consumidor (Inflación) | Feature (X) |
+| **Unemployment** | Tasa de desempleo | Feature (X) |
+| **POP** | Población total de EE. UU. | Feature (X) |
+| **NA000334Q** | Producto Interior Bruto (PIB) | Feature (X) |
+| **PCE** | Gastos de consumo personal | Feature (X) |
 
-## 🛠️ Methodology and Models
+## 🛠️ Metodología y Modelos
+El proyecto sigue un flujo de trabajo de ciencia de datos completo:
+1. **Preprocesamiento**: Manejo de índices temporales y escalado de variables.
+2. **Validación**: Split 80/20 (Train/Test) y **Cross-Validation (K-Fold)** para evitar el sobreajuste.
+3. **Optimización**: Búsqueda de hiperparámetros ($\alpha$) para modelos Ridge y Lasso.
 
-The core of the project involves the following steps:
+### Modelos Evaluados:
+* **Lineales**: Regresión Lineal (OLS), Ridge (L2) y Lasso (L1).
+* **No Lineales**: Random Forest Regressor, K-Nearest Neighbors (KNN) y **Gradient Boosting**.
+* **Series Temporales**: Modelo **SARIMAX** para capturar estacionalidad y autocorrelación.
 
-1.  **Data Preparation:** Load and preprocess the monthly data (`US_DATA.xlsx - Monthly.csv`), handling temporal indices and ensuring all features are numeric.
-2.  **Train/Test Split:** Data is split into training and testing sets to simulate real-world performance evaluation.
-3.  **Model Benchmarking:** A diverse set of models is trained and evaluated using **Cross-Validation (CV)** to ensure robust performance across different data subsets.
+## ⚙️ Características Técnicas Clave
+* **Selección de Características**: Uso de penalización Lasso para identificar las variables macro más influyentes.
+* **Comparativa de Métricas**: Evaluación exhaustiva en el conjunto de test para medir la robustez real del modelo.
+* **Función de Predicción**: El código incluye una función interactiva que permite obtener la predicción de la FED para cualquier mes y año específico del dataset.
 
-### Models Implemented:
+## 🚀 Resultados Finales
+* **Mejor Modelo Lineal**: Ridge Regression (mostrando mayor estabilidad frente a la multicolinealidad).
+* **Mejor Modelo Global**: Los modelos de ensamble (**Random Forest** y **Gradient Boosting**) demostraron una precisión superior al capturar las relaciones no lineales entre la inflación, el empleo y los tipos de interés.
 
-| Category | Model Name | Technique Highlights |
-| :--- | :--- | :--- |
-| **Linear** | **Linear Regression (OLS)** | Baseline linear model. |
-| **Regularized** | **Ridge Regression** | L2 regularization for stability and handling multicollinearity. |
-| **Regularized** | **Lasso Regression** | L1 regularization for feature selection (driving less impactful coefficients to zero). |
-| **Non-Linear** | **Support Vector Regression (SVR)** | Highly versatile non-linear model, optimized via Grid Search. |
-| **Ensemble** | **Random Forest Regressor** | Tree-based ensemble method for capturing complex non-linear interactions. |
-
-## ⚙️ Key Technical Features
-
-* **Hyperparameter Tuning:** Optimal $\alpha$ values for Ridge and Lasso are determined using Cross-Validation (`GridSearchCV`).
-* **Performance Metrics:** Models are evaluated using Mean Squared Error (**MSE**), Mean Absolute Error (**MAE**), and R-squared ($\mathbf{R^2}$).
-* **Next-Step Forecasting:** The code outputs a concrete forecast for the *next month's* FEDFUNDS rate based on the best-performing linear and non-linear models identified during the benchmark phase.
+## 👥 Autores
+* Alberto Cano
+* Ignacio Fernández
+* Iván Mier
+* Gonzalo Ruiz
